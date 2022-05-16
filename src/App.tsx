@@ -1,9 +1,10 @@
 import { GlobalStyle } from './styles/global'
+import { Header } from './components/Header'
 
 function App () {
   return (
     <>
-      <h1>dt money</h1>
+      <Header />
       <GlobalStyle />
     </>
   )

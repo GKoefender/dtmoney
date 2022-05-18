@@ -5,6 +5,8 @@ import { Header } from './components/Header'
 import { Dashboard } from './components/Dashboard'
 import { NewTransactionModal } from './components/NewTransactionModal'
 
+import { TransactionProvider } from './context/TransactionsContext'
+
 function App () {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false)
 
@@ -13,10 +15,12 @@ function App () {
 
   return (
     <>
-      <NewTransactionModal isOpen={modalIsOpen} onRequestClose={closeModal} />
-      <Header setModalIsOpen={openModal} />
-      <Dashboard />
-      <GlobalStyle />
+      <TransactionProvider>
+        <NewTransactionModal isOpen={modalIsOpen} onRequestClose={closeModal} />
+        <Header setModalIsOpen={openModal} />
+        <Dashboard />
+        <GlobalStyle />
+      </TransactionProvider>
     </>
   )
 }

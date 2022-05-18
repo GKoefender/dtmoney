@@ -24,6 +24,11 @@ const Container = styled.div`
       margin-top: 1rem;
       font-weight: 500;
     }
+
+    &.summary-total {
+      background: var(--green);
+      color: #fff;
+    }
   }
 `
 

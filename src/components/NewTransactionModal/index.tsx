@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 
 import Modal from 'react-modal'
 import closeImg from '../../assets/close.svg'
 import outcomeImg from '../../assets/outcome.svg'
 import incomeImg from '../../assets/income.svg'
+import { useTransactions, TransactionOperationType } from '../../context/TransactionsContext'
+
 import { Container, TransactionTypeContainer, RadioButton } from './styles'
 
 interface NewTransactionModalProps {
@@ -11,10 +13,33 @@ interface NewTransactionModalProps {
   onRequestClose: () => void
 }
 
-type TransactionOperationType = 'withdraw' | 'deposit'
-
 function NewTransactionModal ({ isOpen, onRequestClose }: NewTransactionModalProps) {
+  const [title, setTitle] = useState<string>('')
+  const [value, setValue] = useState<number>(0)
+  const [category, setCategory] = useState<string>('')
   const [type, setType] = useState<TransactionOperationType>('withdraw')
+
+  const { createTransaction } = useTransactions()
+
+  const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const newTransaction = {
+      title,
+      amount: value,
+      category,
+      type
+    }
+
+    await createTransaction(newTransaction)
+
+    setTitle('')
+    setValue(0)
+    setCategory('')
+    setType('withdraw')
+
+    onRequestClose()
+  }
 
   return (
     <Modal
@@ -24,10 +49,10 @@ function NewTransactionModal ({ isOpen, onRequestClose }: NewTransactionModalPro
       className="react-modal-content"
     >
       <button type="button" className="react-modal-close" onClick={onRequestClose}><img src={closeImg} alt="Fechar modal"></img></button>
-      <Container >
+      <Container onSubmit={handleSubmitForm}>
         <h2>Cadastrar transação</h2>
-        <input placeholder="Título"/>
-        <input placeholder="Valor"/>
+        <input placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <input placeholder="Valor" value={value} onChange={(e) => setValue(Number(e.target.value))} />
 
         <TransactionTypeContainer >
           <RadioButton type="button" onClick={() => setType('withdraw')} isActive={type === 'withdraw'} activeColor="green">
@@ -41,7 +66,7 @@ function NewTransactionModal ({ isOpen, onRequestClose }: NewTransactionModalPro
           </RadioButton>
         </TransactionTypeContainer>
 
-        <input placeholder="Categoria"/>
+        <input placeholder="Categoria" value={category} onChange={(e) => setCategory(e.target.value)} />
         <button type="submit">Cadastrar</button>
       </Container>
     </Modal>

@@ -23,7 +23,7 @@ createServer({
           title: 'Alimentacao',
           price: '500',
           category: 'Renda',
-          type: 'restaurante',
+          type: 'withdraw',
           date: '17/05/2022'
         }
       ]

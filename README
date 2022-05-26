@@ -1,0 +1,24 @@
+## Sobre
+
+Aplicação de controle de finanças desenvolvida com React
+
+##  Tecnologias utilizadas
+
+  -  Typescript
+  -  ReactJS
+  -  Styled Components
+  -  Miragejs
+
+## Inicialização do projeto
+
+```bash
+$ git clone https://github.com/GKoefender/dtmoney.git dtmoney
+$ cd dtmoney
+$ yarn
+```
+
+### Rodando em ambiente desenvolvimento
+
+```bash
+$ yarn start
+```
